@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { ReactQueryDevtools } from 'react-query-devtools'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
@@ -10,6 +11,7 @@ ReactDOM.render(
       <CSSReset />
       <App />
     </ThemeProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
   </React.StrictMode>,
   document.getElementById('root')
 );
