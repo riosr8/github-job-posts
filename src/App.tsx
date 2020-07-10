@@ -1,24 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useInfiniteQuery } from 'react-query';
 
 function App() {
+
+  const [search, setSearch] = React.useState('');
+
+  const {
+    status,
+    data,
+    error,
+    isFetching,
+    isFetchingMore,
+    fetchMore,
+    canFetchMore,
+  } = useInfiniteQuery<any, any, any>(
+    ['jobs', { search }],
+    async (key: string, { search }, page: number = 0) => {
+      console.log(key, search, page)
+      const res = await fetch(`/positions.json?page=${page}&search=${search}`, {
+      });
+      const data = await res.json();
+      return { data, page: page + 1 };
+    },
+    {
+      getFetchMore: lastGroup => lastGroup.page,
+    }
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={() => fetchMore()}>fetch more</button>
     </div>
   );
 }
