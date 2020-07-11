@@ -1,6 +1,7 @@
 import React from 'react';
-import { Stack } from '@chakra-ui/core';
+import { Stack, Box } from '@chakra-ui/core';
 import { useInfiniteQuery } from 'react-query';
+import Job, { IJob } from './job';
 
 interface JobsProps {
     search: string;
@@ -30,7 +31,31 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
         }
     );
 
-    return <div>jobs</div>;
+    return (
+        <Box>
+            {
+                isLoading ? (
+                    <div>Loading...</div>
+                ) : isError ? (
+                    <div>Error...</div>
+                ) : (
+                            <>
+                                {
+                                    data.map((page, i) => (
+                                        <React.Fragment key={i}>
+                                            {
+                                                page.data.map((job: IJob) => (
+                                                    <Job key={`job-${job.id}`} {...job} />
+                                                ))
+                                            }
+                                        </React.Fragment>
+                                    ))
+                                }
+                            </>
+                        )
+            }
+        </Box>
+    );
 }
 
 export default Jobs;
