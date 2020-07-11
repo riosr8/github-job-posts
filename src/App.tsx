@@ -16,7 +16,7 @@ function App() {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
         />
       </Flex>
-      <Box bg='#68d391' gridArea='content' h='100vh'>
+      <Box gridArea='content' h='100vh'>
         <Jobs search={search} />
       </Box>
     </Grid>
