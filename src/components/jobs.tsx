@@ -8,9 +8,10 @@ interface JobsProps {
 
 const Jobs: React.FC<JobsProps> = ({ search }) => {
     const {
-        status,
         data,
         error,
+        isLoading,
+        isError,
         isFetching,
         isFetchingMore,
         fetchMore,
