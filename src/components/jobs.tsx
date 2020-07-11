@@ -19,7 +19,7 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
         ['jobs', { search }],
         async (key: string, { search }, page: number = 0) => {
             console.log(key, search, page)
-            const res = await fetch(`/positions.json?page=${page}&search=${search}`, {
+            const res = await fetch(`/positions.json?markdown=true&page=${page}&search=${search}`, {
             });
             const data = await res.json();
             return { data, page: page + 1 };
