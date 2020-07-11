@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, Flex, Box, Input } from '@chakra-ui/core';
 import { useInfiniteQuery } from 'react-query';
 
 function App() {
@@ -26,10 +27,15 @@ function App() {
       getFetchMore: lastGroup => lastGroup.page,
     }
   );
+
   return (
-    <div>
-      <button onClick={() => fetchMore()}>fetch more</button>
-    </div>
+    <Grid w={'90%'} gridGap='20px' m='0 auto' templateColumns='3fr' templateRows='auto' templateAreas={`'header' 'content'`}>
+      <Flex gridArea='header' h='10vh' alignItems='center'>
+        <Input size='lg' borderWidth='3px' placeholder='Search...' />
+      </Flex>
+      <Box bg='#68d391' gridArea='content' h='100vh'>Content</Box>
+    </Grid>
+
   );
 }
 
