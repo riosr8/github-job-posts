@@ -1,6 +1,7 @@
 import React from 'react';
-import { Stack, Box, Flex } from '@chakra-ui/core';
+import { Stack, Box, useDisclosure, PseudoBox } from '@chakra-ui/core';
 import { useInfiniteQuery } from 'react-query';
+import { useInView } from 'react-intersection-observer';
 import Job, { IJob } from './job';
 
 interface JobsProps {
@@ -31,6 +32,18 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
         }
     );
 
+    const [jobId, setJobId] = React.useState('');
+    const [ref, inView] = useInView({
+        /* Optional options */
+        threshold: 0,
+    })
+
+    React.useEffect(() => {
+        if (inView) {
+            fetchMore();
+        }
+    }, [inView, fetchMore])
+
     return (
         <Box>
             {
@@ -48,6 +61,16 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
                             </Stack>
                         )
             }
+            <PseudoBox ref={ref} onClick={() => { fetchMore() }}>
+                {
+                    isFetchingMore ?
+                        'Fetching More' :
+                        canFetchMore ?
+                            'Fetch More' :
+                            'Nothing more to fetch'
+
+                }
+            </PseudoBox>
         </Box>
     );
 }
