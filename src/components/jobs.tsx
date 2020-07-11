@@ -27,7 +27,7 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
             return { data, page: page + 1 };
         },
         {
-            getFetchMore: lastGroup => lastGroup.page,
+            getFetchMore: lastGroup => (lastGroup.data.length !== 0 ? lastGroup.page : false),
         }
     );
 
