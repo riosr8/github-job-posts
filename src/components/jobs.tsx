@@ -71,11 +71,12 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
             <JobDetails id={jobId} isOpen={isOpen} onClose={onClose} />
             <PseudoBox ref={ref} onClick={() => { fetchMore() }}>
                 {
-                    isFetchingMore ?
-                        'Fetching More' :
-                        canFetchMore ?
-                            'Fetch More' :
-                            'Nothing more to fetch'
+                    isLoading ? '' :
+                        isFetchingMore ?
+                            'Fetching More' :
+                            canFetchMore ?
+                                'Fetch More' :
+                                'Nothing more to fetch'
 
                 }
             </PseudoBox>
