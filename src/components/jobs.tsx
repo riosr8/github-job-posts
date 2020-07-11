@@ -3,6 +3,7 @@ import { Stack, Box, useDisclosure, PseudoBox } from '@chakra-ui/core';
 import { useInfiniteQuery } from 'react-query';
 import { useInView } from 'react-intersection-observer';
 import Job, { IJob } from './job';
+import JobDetails from './job-details';
 
 interface JobsProps {
     search: string;
@@ -11,10 +12,8 @@ interface JobsProps {
 const Jobs: React.FC<JobsProps> = ({ search }) => {
     const {
         data,
-        error,
         isLoading,
         isError,
-        isFetching,
         isFetchingMore,
         fetchMore,
         canFetchMore,
@@ -32,6 +31,7 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
         }
     );
 
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [jobId, setJobId] = React.useState('');
     const [ref, inView] = useInView({
         /* Optional options */
@@ -55,12 +55,20 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
                             <Stack spacing={8}>
                                 {
                                     data.map((page, i) => page.data.map((job: IJob) => (
-                                        <Job key={`job-${job.id}`} {...job} />
+                                        <Job
+                                            key={`job-${job.id}`}
+                                            onClick={() => {
+                                                setJobId(job.id);
+                                                onOpen();
+                                            }}
+                                            {...job}
+                                        />
                                     )))
                                 }
                             </Stack>
                         )
             }
+            <JobDetails id={jobId} isOpen={isOpen} onClose={onClose} />
             <PseudoBox ref={ref} onClick={() => { fetchMore() }}>
                 {
                     isFetchingMore ?
