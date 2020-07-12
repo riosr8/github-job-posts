@@ -69,7 +69,8 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
                         )
             }
             {
-                jobId ? <JobDetails id={jobId} isOpen={isOpen} onClose={onClose} /> : null
+                jobId ?
+                    <JobDetails id={jobId} isOpen={isOpen} onClose={() => { setJobId(''); onClose(); }} /> : null
             }
             <PseudoBox ref={ref} onClick={() => { fetchMore() }}>
                 {
