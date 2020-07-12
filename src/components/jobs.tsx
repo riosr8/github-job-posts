@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Box, useDisclosure, PseudoBox, Button } from '@chakra-ui/core';
+import { Stack, Box, useDisclosure, Button } from '@chakra-ui/core';
 import { useInfiniteQuery } from 'react-query';
 import { useInView } from 'react-intersection-observer';
 import Job, { IJob } from './job';
