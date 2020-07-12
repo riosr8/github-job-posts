@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Box, useDisclosure, PseudoBox } from '@chakra-ui/core';
+import { Stack, Box, useDisclosure, PseudoBox, Button } from '@chakra-ui/core';
 import { useInfiniteQuery } from 'react-query';
 import { useInView } from 'react-intersection-observer';
 import Job, { IJob } from './job';
@@ -73,17 +73,17 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
                 jobId ?
                     <JobDetails id={jobId} isOpen={isOpen} onClose={() => { setJobId(''); onClose(); }} /> : null
             }
-            <PseudoBox ref={ref} onClick={() => { if (canFetchMore) { fetchMore() } }}>
+            <Button variant='ghost' mt='1em' w='100%' ref={ref} onClick={() => { if (canFetchMore) { fetchMore() } }}>
                 {
                     isLoading ? '' :
                         isFetchingMore ?
                             'Fetching More' :
                             canFetchMore ?
                                 'Fetch More' :
-                                'Nothing more to fetch'
+                                'No results returned'
 
                 }
-            </PseudoBox>
+            </Button>
         </Box>
     );
 }
