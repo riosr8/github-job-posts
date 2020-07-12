@@ -6,11 +6,11 @@ import Job, { IJob } from './job';
 import JobDetails from './job-details';
 import Loading from './loading';
 
-const headers = {
-    'Access-Control-Allow-Origin': 'https://stoic-fermat-a47cdc.netlify.app',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
-}
+// const headers = {
+//     'Access-Control-Allow-Origin': 'https://stoic-fermat-a47cdc.netlify.app',
+//     'Access-Control-Allow-Methods': 'GET, OPTIONS',
+//     'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
+// }
 
 interface JobsProps {
     search: string;
@@ -29,9 +29,7 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
         ['jobs', { search }],
         async (key: string, { search }, page: number = 0) => {
             console.log(key, search, page)
-            const res = await fetch(`${process.env.NODE_ENV === 'production' ? 'https://jobs.github.com' : ''}/positions.json?markdown=true&page=${page}&search=${search}`, {
-                headers
-            });
+            const res = await fetch(`/api/positions.json?markdown=true&page=${page}&search=${search}`);
             const data = await res.json();
             const nextPage = data.length !== 0 ? page + 1 : null;
             return { data, page: nextPage };

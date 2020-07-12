@@ -19,7 +19,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ id, onClose, isOpen }) => {
         ['job', id],
         async (key: string, id: string): Promise<IJob> => {
             try {
-                const res = await fetch(`/positions/${id}.json?markdown=true`);
+                const res = await fetch(`/api/positions/${id}.json?markdown=true`);
                 return await res.json();
             } catch (error) {
                 throw error
