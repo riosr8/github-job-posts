@@ -46,7 +46,7 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
     }, [inView, fetchMore, canFetchMore])
 
     return (
-        <Box>
+        <Box mb={4}>
             {
                 isLoading ? (
                     <div>Loading...</div>
