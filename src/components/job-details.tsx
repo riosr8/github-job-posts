@@ -3,6 +3,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, Modal
 import { useQuery } from 'react-query';
 import { IJob } from './job';
 import ReactMarkdown from 'react-markdown';
+import Loading from './loading';
 
 interface JobDetailsProps {
     id: string;
@@ -33,7 +34,7 @@ const JobDetails: React.FC<JobDetailsProps> = ({ id, onClose, isOpen }) => {
             <ModalContent>
                 {
                     isLoading ?
-                        'Loading...' :
+                        <Loading /> :
                         isError ?
                             'Error' :
                             (
