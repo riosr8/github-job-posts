@@ -24,10 +24,11 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
             const res = await fetch(`/positions.json?markdown=true&page=${page}&search=${search}`, {
             });
             const data = await res.json();
-            return { data, page: page + 1 };
+            const nextPage = data.length !== 0 ? page + 1 : null;
+            return { data, page: nextPage };
         },
         {
-            getFetchMore: lastGroup => (lastGroup.data.length !== 0 ? lastGroup.page : false),
+            getFetchMore: lastGroup => lastGroup.page,
         }
     );
 
@@ -39,10 +40,10 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
     })
 
     React.useEffect(() => {
-        if (inView) {
+        if (inView && canFetchMore) {
             fetchMore();
         }
-    }, [inView, fetchMore])
+    }, [inView, fetchMore, canFetchMore])
 
     return (
         <Box>
@@ -72,7 +73,7 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
                 jobId ?
                     <JobDetails id={jobId} isOpen={isOpen} onClose={() => { setJobId(''); onClose(); }} /> : null
             }
-            <PseudoBox ref={ref} onClick={() => { fetchMore() }}>
+            <PseudoBox ref={ref} onClick={() => { if (canFetchMore) { fetchMore() } }}>
                 {
                     isLoading ? '' :
                         isFetchingMore ?
