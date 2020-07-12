@@ -4,6 +4,7 @@ import { useInfiniteQuery } from 'react-query';
 import { useInView } from 'react-intersection-observer';
 import Job, { IJob } from './job';
 import JobDetails from './job-details';
+import Loading from './loading';
 
 interface JobsProps {
     search: string;
@@ -49,7 +50,7 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
         <Box mb={4}>
             {
                 isLoading ? (
-                    <div>Loading...</div>
+                    <Loading />
                 ) : isError ? (
                     <div>Error...</div>
                 ) : (
