@@ -7,7 +7,7 @@ import JobDetails from './job-details';
 import Loading from './loading';
 
 const headers = {
-    'Access-Control-Allow-Origin': 'https://jobs.github.com',
+    'Access-Control-Allow-Origin': 'https://stoic-fermat-a47cdc.netlify.app',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
 }
