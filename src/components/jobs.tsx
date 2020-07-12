@@ -54,37 +54,40 @@ const Jobs: React.FC<JobsProps> = ({ search }) => {
                 ) : isError ? (
                     <div>Error...</div>
                 ) : (
-                            <Stack spacing={8}>
+                            <>
+                                <Stack spacing={8}>
+                                    {
+                                        data.map((page, i) => page.data.map((job: IJob) => (
+                                            <Job
+                                                key={`job-${job.id}`}
+                                                onClick={() => {
+                                                    setJobId(job.id);
+                                                    onOpen();
+                                                }}
+                                                {...job}
+                                            />
+                                        )))
+                                    }
+                                </Stack>
                                 {
-                                    data.map((page, i) => page.data.map((job: IJob) => (
-                                        <Job
-                                            key={`job-${job.id}`}
-                                            onClick={() => {
-                                                setJobId(job.id);
-                                                onOpen();
-                                            }}
-                                            {...job}
-                                        />
-                                    )))
+                                    jobId ?
+                                        <JobDetails id={jobId} isOpen={isOpen} onClose={() => { setJobId(''); onClose(); }} /> : null
                                 }
-                            </Stack>
+                                <Button variant='ghost' mt='1em' w='100%' ref={ref} onClick={() => { if (canFetchMore) { fetchMore() } }}>
+                                    {
+                                        isLoading ? '' :
+                                            isFetchingMore ?
+                                                'Fetching More' :
+                                                canFetchMore ?
+                                                    'Fetch More' :
+                                                    'No results returned'
+
+                                    }
+                                </Button>
+                            </>
                         )
             }
-            {
-                jobId ?
-                    <JobDetails id={jobId} isOpen={isOpen} onClose={() => { setJobId(''); onClose(); }} /> : null
-            }
-            <Button variant='ghost' mt='1em' w='100%' ref={ref} onClick={() => { if (canFetchMore) { fetchMore() } }}>
-                {
-                    isLoading ? '' :
-                        isFetchingMore ?
-                            'Fetching More' :
-                            canFetchMore ?
-                                'Fetch More' :
-                                'No results returned'
 
-                }
-            </Button>
         </Box>
     );
 }
